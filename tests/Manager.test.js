@@ -21,6 +21,6 @@ describe('Manager', () => {
     });
 
     it('get Manager gitOfficeNumber', () => {
-        expect(manager.getSchool()).toEqual('103');
+        expect(manager.getOfficeNumber()).toEqual('103');
     });
 })

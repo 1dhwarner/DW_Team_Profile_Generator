@@ -65,7 +65,7 @@ const managerPrompt = function () {
             name: 'idManager'
         }
     ]).then(function (answers) {
-        team.manager = new Manager(answers.nameManager, answers.emailManager, answers.officeManager, answers.idManager);
+        team.manager = new Manager(answers.nameManager, answers.idManager, answers.emailManager, answers.officeManager);
         menuPrompt();
     });
 };

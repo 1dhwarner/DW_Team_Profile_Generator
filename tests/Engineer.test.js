@@ -5,7 +5,7 @@ const engineer = new Engineer('David', 1, 'david@mail.com', 'github.com/1dhwarne
 describe('Engineer', () => {
 
     it('creates an engineer if a user submits the proper prompts', () => {
-        expect(engineer.getRole()).toEqual('engineer');
+        expect(engineer.getRole()).toEqual('Engineer');
     });
 
     it('creates an engineer if a user submits the proper prompts', () => {
