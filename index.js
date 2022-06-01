@@ -6,6 +6,7 @@ const Manager = require('./lib/Manager');
 const generateHTML = require('./src/generateHTML.js');
 const { default: generate } = require('@babel/generator');
 
+// the team object that will be logged to the console once the prompts collect all user information
 let team = {
     manager: "",
     interns: [],
@@ -26,12 +27,10 @@ const menuPrompt = function () {
         },
     ])
         .then(function (selection) {
-            console.log(selection)
+            // using a switch case, similar to last assignment's inquirer + switch case 
             switch (selection.menuSelection) {
                 case 'Intern':
-                    console.log('YEUH');
                     internPrompt();
-                    console.log('line 44');
                     break;
                 case 'Engineer':
                     engineerPrompt();
@@ -84,16 +83,17 @@ const internPrompt = function () {
         },
         {
             type: 'input',
-            message: "Please enter th name of the school that this intern attends.",
+            message: "Please enter the name of the school that this intern attends.",
             name: 'schoolIntern'
         },
         {
             type: 'input',
-            message: "Please enter the name the team manager's unique employee ID.",
+            message: "Please enter the name of the intern's unique employee ID.",
             name: 'idIntern'
         }
     ]).then(function (answers) {
-        team.interns.push(new Intern(answers.nameIntern, answers.emailIntern, answers.schoolIntern, answers.idIntern));
+        // order matters here!! 
+        team.interns.push(new Intern(answers.nameIntern, answers.idIntern, answers.emailIntern, answers.schoolIntern));
         menuPrompt();
     });
 };
@@ -102,44 +102,36 @@ const engineerPrompt = function () {
     inquirer.prompt([
         {
             type: 'input',
-            message: 'Please enter the name of this intern, kind stranger.',
+            message: 'Please enter the name of this engineer, kind stranger.',
             name: 'nameEngineer'
         },
         {
             type: 'input',
-            message: "Please enter the intern's email.",
+            message: "Please enter the engineer's email.",
             name: 'emailEngineer'
         },
         {
             type: 'input',
-            message: "Please enter the name the engineer's github.",
+            message: "Please enter the engineer's github.",
             name: 'githubEngineer'
         },
         {
             type: 'input',
-            message: "Please enter the name the team manager's unique employee ID.",
+            message: "Please enter the name of the engineer's unique employee ID.",
             name: 'idEngineer'
         }
     ]).then(function (answers) {
-        team.engineers.push(new Engineer(answers.nameEngineer, answers.emailEngineer, answers.schoolEngineer, answers.idEngineer));
+        team.engineers.push(new Engineer(answers.nameEngineer, answers.idEngineer, answers.emailEngineer, answers.githubEngineer));
         menuPrompt();
     });
 };
 
-// const finish = () => {
-//     managerPrompt()
-//         .then((team) => fs.writeFileSync('./dist/team.html', generateHTML.htmlGenerator(team)))
-//         .then(() => console.log('Successfully generated a ReadMe'))
-//         .catch((err) => console.error(err));
-// }
-
+// Using fs.writeFileSync in a similar function to the previous hw assignment 
 const finish = () => {
     console.log('team: ', team);
     fs.writeFileSync('./dist/team.html', generateHTML.htmlGenerator(team));
-    // .then(() => console.log('Successfully generated a ReadMe'))
-    // .catch((err) => console.error(err));
-
 };
 
+// start with manager prompt, collect info, then move to menu prompt
 managerPrompt();
 
